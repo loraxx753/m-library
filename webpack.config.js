@@ -4,7 +4,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:7000/",
+    publicPath: "http://localhost:7001/",
   },
 
   resolve: {
@@ -12,7 +12,7 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
-    port: 7000,
+    port: 7001,
     historyApiFallback: true,
   },
 
@@ -41,10 +41,13 @@ module.exports = (_, argv) => ({
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "madrox",
-      filename: "madroxEntry.js",
+      name: "mLibrary",
+      filename: "libraryEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./components": "./src/exports/components.ts",
+        "./themes": "./src/exports/themes.ts", 
+      },
       shared: {
         ...deps,
         react: {
